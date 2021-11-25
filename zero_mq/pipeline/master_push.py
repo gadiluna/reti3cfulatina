@@ -1,12 +1,9 @@
 import json
 import threading
 import time
-import multithread
 import zmq
 import random
 from uuid import uuid4
-
-
 
 def generate_work():
     id=str(uuid4())
@@ -19,10 +16,7 @@ def generate_work():
 def collect_work(sock):
     while True:
         job_done=json.loads(str(sock.recv(),'UTF-8'))
-        print("Done Job received")
-
-
-
+        print("Done Job received by {}".format(job_done['pid']))
 
 context = zmq.Context()
 sock_push = context.socket(zmq.PUSH)

@@ -1,11 +1,17 @@
 import json
+import os
 import zmq
-
+myid=os.getpid()
 
 def execute_work(msg):
     l=msg['work']
     return sorted(l)
 
+def create_message(lista):
+    msg={}
+    msg['pid']=myid
+    msg['list']=lista
+    return msg
 
 context = zmq.Context()
 sock = context.socket(zmq.PULL)
@@ -17,4 +23,4 @@ with sock:
         msg=json.loads(str(sock.recv(),'UTF-8'))
         l=execute_work(msg)
         print(str(l[0:10])[:-1]+'...')
-        sock_return.send(bytes(json.dumps(l),'UTF-8'))
+        sock_return.send(bytes(json.dumps(create_message(l)),'UTF-8'))
