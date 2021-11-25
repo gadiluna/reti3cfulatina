@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+message sum_req{
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message sum_rep{
+  int32 z=1;
+}
+
+service Sum {
+   // (Method definitions not shown)
+  rpc Sum(sum_req) returns (sum_rep) {}
+  rpc StreamSum(stream sum_req) returns (stream sum_rep){}
+}
+
